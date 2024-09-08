@@ -4,6 +4,8 @@
 
 An extension for Zotero that allows you to pin items in your collections so they always appear at the top.
 
+![overview-image](https://github.com/user-attachments/assets/15e6d0ce-5026-44bd-b353-f2cea7fad407)
+
 ## Installation
 
 > **Note:** This extension only works with Zotero 7
@@ -12,3 +14,12 @@ An extension for Zotero that allows you to pin items in your collections so they
 2. Save the .xpi file (in Firefox, Right click -> Save Link As)
 3. Install in Zotero (Tools -> Plugins -> Gear icon in the top right -> Install Plugin From File -> Select the .xpi file you downloaded)
 4. Right click on the item pane column header and enable the Annotations column
+
+## How to use
+
+1. Right click on the item pane header, then add the Pinned Items column
+2. Click the pin in the header to sort pinned items to the top
+3. Right click on the item pane header, then set the secondary sorting
+4. Right click on items to pin / unpin them (note: you can pin items in different collections independently)
+
+![how-to-pin-item](https://github.com/user-attachments/assets/e7771957-6f0f-4275-aeef-4b9a8fd54f80)
