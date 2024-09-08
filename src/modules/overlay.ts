@@ -33,7 +33,9 @@ export default class ZoteroPinItems {
 			label: getString("pinitems-column-name"),
 			pluginID: config.addonID,
 			dataProvider: (item: Zotero.Item, dataKey: string) => {
-				return this.isItemPinned(item).toString();
+				return item.isRegularItem()
+					? this.isItemPinned(item).toString()
+					: "";
 			},
 			renderCell: (
 				index: number,
@@ -142,7 +144,9 @@ export default class ZoteroPinItems {
 				label: getString("pin-item"),
 				icon: "chrome://zotero/skin/16/universal/pin.svg",
 				getVisibility: (element, event) => {
-					const selectedItems = ZoteroPane.getSelectedItems();
+					const selectedItems = ZoteroPane.getSelectedItems().filter(
+						(item) => item.isRegularItem(),
+					);
 					if (selectedItems.length > 1) {
 						(element as XUL.MenuItem).label =
 							getString("pin-items");
@@ -155,9 +159,9 @@ export default class ZoteroPinItems {
 					}
 				},
 				commandListener: (event) => {
-					ZoteroPane.getSelectedItems().forEach((item) =>
-						this.pinItem(item),
-					);
+					ZoteroPane.getSelectedItems()
+						.filter((item) => item.isRegularItem())
+						.forEach((item) => this.pinItem(item));
 				},
 			},
 			"after",
@@ -173,7 +177,9 @@ export default class ZoteroPinItems {
 				label: getString("unpin-item"),
 				icon: "chrome://zotero/skin/16/universal/pin-remove.svg",
 				getVisibility: (element, event) => {
-					const selectedItems = ZoteroPane.getSelectedItems();
+					const selectedItems = ZoteroPane.getSelectedItems().filter(
+						(item) => item.isRegularItem(),
+					);
 					if (selectedItems.length > 1) {
 						(element as XUL.MenuItem).label =
 							getString("unpin-items");
@@ -187,9 +193,9 @@ export default class ZoteroPinItems {
 					}
 				},
 				commandListener: (event) => {
-					ZoteroPane.getSelectedItems().forEach((item) =>
-						this.unpinItem(item),
-					);
+					ZoteroPane.getSelectedItems()
+						.filter((item) => item.isRegularItem())
+						.forEach((item) => this.unpinItem(item));
 				},
 			},
 			"after",
