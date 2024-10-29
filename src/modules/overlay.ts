@@ -107,14 +107,14 @@ export default class ZoteroPinItems {
 
 	isItemPinned(item: Zotero.Item) {
 		return this.getItemPinnedCollections(item).includes(
-			ZoteroPane.getSelectedCollection()?.key as string,
+			ZoteroPane.getSelectedCollection()?.key || "library",
 		);
 	}
 
 	pinItem(item: Zotero.Item) {
 		const pinnedCollections = this.getItemPinnedCollections(item);
-		const currentCollection = ZoteroPane.getSelectedCollection()
-			?.key as string;
+		const currentCollection =
+			ZoteroPane.getSelectedCollection()?.key || "library";
 		if (!pinnedCollections.includes(currentCollection)) {
 			pinnedCollections.push(currentCollection);
 			this.setItemPinnedCollections(item, pinnedCollections);
