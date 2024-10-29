@@ -57,7 +57,7 @@ export default class ZoteroPinItems {
 			},
 			fixedWidth: true,
 			// staticWidth: true,
-			width: "32",
+			width: 32,
 			zoteroPersist: ["width", "hidden", "sortDirection"],
 		});
 	}
@@ -148,11 +148,12 @@ export default class ZoteroPinItems {
 						(item) => item.isRegularItem(),
 					);
 					if (selectedItems.length > 1) {
-						(element as XUL.MenuItem).label =
+						(element as XULMenuItemElement).label =
 							getString("pin-items");
 						return true; // multiple selected - show both
 					} else if (selectedItems.length == 1) {
-						(element as XUL.MenuItem).label = getString("pin-item");
+						(element as XULMenuItemElement).label =
+							getString("pin-item");
 						return !this.isItemPinned(selectedItems[0]); // not pinned - show pin button
 					} else {
 						return false;
@@ -167,7 +168,7 @@ export default class ZoteroPinItems {
 			"after",
 			Zotero.getMainWindow().document.querySelector(
 				".menuitem-iconic.zotero-menuitem-reindex",
-			) as XUL.Element,
+			) as XULMenuItemElement,
 		);
 		ztoolkit.Menu.register(
 			"item",
@@ -181,11 +182,11 @@ export default class ZoteroPinItems {
 						(item) => item.isRegularItem(),
 					);
 					if (selectedItems.length > 1) {
-						(element as XUL.MenuItem).label =
+						(element as XULMenuItemElement).label =
 							getString("unpin-items");
 						return true; // multiple selected - show both
 					} else if (selectedItems.length == 1) {
-						(element as XUL.MenuItem).label =
+						(element as XULMenuItemElement).label =
 							getString("unpin-item");
 						return this.isItemPinned(selectedItems[0]); // pinned - show unpin button
 					} else {
@@ -201,7 +202,7 @@ export default class ZoteroPinItems {
 			"after",
 			Zotero.getMainWindow().document.querySelector(
 				"#zotero-pin-items-pin",
-			) as XUL.Element,
+			) as XULMenuItemElement,
 		);
 	}
 
