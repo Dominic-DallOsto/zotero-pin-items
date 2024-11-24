@@ -53,17 +53,7 @@
 		"printWidth": 80,
 		"useTabs": true,
 		"tabWidth": 4,
-		"endOfLine": "lf",
-		"overrides": [
-			{
-				"files": [
-					"*.xhtml"
-				],
-				"options": {
-					"htmlWhitespaceSensitivity": "css"
-				}
-			}
-		]
+		"endOfLine": "lf"
 	},
 	"release-it": {
 		"git": {
