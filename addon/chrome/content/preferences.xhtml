@@ -1,0 +1,25 @@
+<linkset>
+	<html:link rel="localization" href="__addonRef__-addon.ftl" />
+</linkset>
+<vbox id="zotero-prefpane-__addonRef__" class="main-section">
+	<groupbox>
+		<label>
+			<html:h2 data-l10n-id="pref-pinitems-sort-order-title"></html:h2>
+			<html:p data-l10n-id="pref-pinitems-sort-order-description"></html:p>
+		</label>
+		<radiogroup preference="extensions.zotero.__addonRef__.pinitems-sort-order">
+			<radio value="0" data-l10n-id="pref-pinitems-sort-order-ascending" />
+			<radio value="1" data-l10n-id="pref-pinitems-sort-order-descending" />
+		</radiogroup>
+	</groupbox>
+	<groupbox>
+		<label>
+			<html:h2 data-l10n-id="pref-pinitems-sort-order-files-title"></html:h2>
+			<html:p data-l10n-id="pref-pinitems-sort-order-files-description"></html:p>
+		</label>
+		<radiogroup preference="extensions.zotero.__addonRef__.pinitems-sort-order-files">
+			<radio value="0" data-l10n-id="pref-pinitems-sort-order-files-before" />
+			<radio value="1" data-l10n-id="pref-pinitems-sort-order-files-after" />
+		</radiogroup>
+	</groupbox>
+</vbox>
