@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import { config } from "../../package.json";
 
 export { initLocale, getString };
@@ -11,14 +12,12 @@ export { initLocale, getString };
  * Initialize locale data
  */
 function initLocale() {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 	const l10n = new (
 		typeof Localization === "undefined"
 			? ztoolkit.getGlobal("Localization")
 			: Localization
 	)([`${config.addonRef}-addon.ftl`], true);
 	addon.data.locale = {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		current: l10n,
 	};
 }

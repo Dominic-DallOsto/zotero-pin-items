@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const patchMarker = "ZoteroReadingListPatch";
 const patchMarkerOriginal = "ZoteroReadingListPatch_original";
 
@@ -19,7 +20,7 @@ export function patch(
 		throw new Error(
 			`${methodObject}.${methodName} is already patched by ${patchMarker}`,
 		);
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
 	methodObject[methodName] = patcher(originalFunction);
 	methodObject[methodName][patchMarker] = true;
 	methodObject[methodName][patchMarkerOriginal] = originalFunction;
@@ -39,7 +40,6 @@ export function unpatch(methodObject: any, methodName: string) {
 			`${methodObject}.${methodName} isn't already patched by ${patchMarker} so can't be unpatched`,
 		);
 	} else {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		methodObject[methodName] =
 			methodObject[methodName][patchMarkerOriginal];
 		delete methodObject[methodName][patchMarker];

@@ -14,18 +14,18 @@ export default class ZoteroPinItems {
 	preferenceUpdateObservers?: symbol[];
 
 	constructor() {
-		void this.addPinItemsColumn();
+		this.addPinItemsColumn();
 		this.addRightClickMenuItems();
 		this.addOverlayStyleSheet();
 	}
 
 	public unload() {
-		void this.removePinItemsColumn();
+		this.removePinItemsColumn();
 		this.removeRightClickMenuItems();
 	}
 
-	async addPinItemsColumn() {
-		this.pinItemsColumnId = await Zotero.ItemTreeManager.registerColumn({
+	addPinItemsColumn() {
+		this.pinItemsColumnId = Zotero.ItemTreeManager.registerColumn({
 			dataKey: PIN_ITEMS_COLUMN_ID,
 			// If we just want to show the icon, overwrite the label with htmlLabel (#1)
 			htmlLabel: `<span xmlns="http://www.w3.org/1999/xhtml" class="icon icon-css icon-16" style="background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain; fill: var(--fill-secondary); -moz-context-properties: fill;" />`,
@@ -69,11 +69,9 @@ export default class ZoteroPinItems {
 		return span;
 	}
 
-	async removePinItemsColumn() {
+	removePinItemsColumn() {
 		if (this.pinItemsColumnId) {
-			await Zotero.ItemTreeManager.unregisterColumn(
-				this.pinItemsColumnId,
-			);
+			Zotero.ItemTreeManager.unregisterColumn(this.pinItemsColumnId);
 			this.pinItemsColumnId = undefined;
 		}
 	}
