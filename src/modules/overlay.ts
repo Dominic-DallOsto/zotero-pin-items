@@ -25,7 +25,7 @@ export default class ZoteroPinItems {
 	}
 
 	async addPinItemsColumn() {
-		this.pinItemsColumnId = await Zotero.ItemTreeManager.registerColumns({
+		this.pinItemsColumnId = await Zotero.ItemTreeManager.registerColumn({
 			dataKey: PIN_ITEMS_COLUMN_ID,
 			// If we just want to show the icon, overwrite the label with htmlLabel (#1)
 			htmlLabel: `<span xmlns="http://www.w3.org/1999/xhtml" class="icon icon-css icon-16" style="background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain; fill: var(--fill-secondary); -moz-context-properties: fill;" />`,
@@ -57,16 +57,13 @@ export default class ZoteroPinItems {
 			},
 			fixedWidth: true,
 			// staticWidth: true,
-			width: 32,
+			width: "32",
 			zoteroPersist: ["width", "hidden", "sortDirection"],
 		});
 	}
 
 	createSpanElement(className: string, innerText: string) {
-		const span = document.createElementNS(
-			"http://www.w3.org/1999/xhtml",
-			"span",
-		);
+		const span = document.createXULElement("span") as HTMLSpanElement;
 		span.className = className;
 		span.innerText = innerText;
 		return span;
@@ -74,7 +71,7 @@ export default class ZoteroPinItems {
 
 	async removePinItemsColumn() {
 		if (this.pinItemsColumnId) {
-			await Zotero.ItemTreeManager.unregisterColumns(
+			await Zotero.ItemTreeManager.unregisterColumn(
 				this.pinItemsColumnId,
 			);
 			this.pinItemsColumnId = undefined;
