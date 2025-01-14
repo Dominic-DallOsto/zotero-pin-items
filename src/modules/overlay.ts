@@ -150,8 +150,8 @@ export default class ZoteroPinItems {
 
 	unpinItem(item: Zotero.Item) {
 		const pinnedCollections = this.getItemPinnedCollections(item);
-		const currentCollection = ZoteroPane.getSelectedCollection()
-			?.key as string;
+		const currentCollection =
+			ZoteroPane.getSelectedCollection()?.key || "library";
 		if (pinnedCollections.includes(currentCollection)) {
 			this.setItemPinnedCollections(
 				item,
