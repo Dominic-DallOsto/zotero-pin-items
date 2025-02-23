@@ -130,7 +130,9 @@ export default class ZoteroPinItems {
 					) {
 						if (ZoteroPane.itemsView != false) {
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-							const row = ZoteroPane.itemsView.getRow(index) as any;
+							const row = ZoteroPane.itemsView.getRow(
+								index,
+							) as any;
 							// actually the ref property does exist, but until it's added we need to disable TS
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 							const item: Zotero.Item = row.ref;
