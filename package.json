@@ -1,6 +1,6 @@
 {
 	"name": "zotero-pin-items",
-	"version": "0.3.3",
+	"version": "0.4.0-beta.0",
 	"description": "Pin items to the top of your collections in Zotero",
 	"config": {
 		"addonName": "Zotero Pin Items",
