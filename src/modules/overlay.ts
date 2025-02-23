@@ -10,6 +10,7 @@ import {
 	initialiseDefaultPref,
 	getPrefGlobalName,
 } from "../utils/prefs";
+import { patch } from "../utils/patcher";
 
 const PIN_ITEMS_COLUMN_ID = "pinitems";
 const PINNED_EXTRA_FIELD = "Pinned_Collections";
@@ -36,6 +37,7 @@ export default class ZoteroPinItems {
 		this.addOverlayStyleSheet();
 		this.addPreferencesMenu();
 		this.addPreferenceUpdateObservers();
+		void this.addClickListenerToItemTree();
 	}
 
 	public unload() {
@@ -78,11 +80,14 @@ export default class ZoteroPinItems {
 					`cell ${column.className}`,
 					"",
 				);
-				if (data === "T") {
-					const icon = this.createSpanElement("icon icon-css", "");
-					icon.style.cssText +=
-						"background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain; fill: var(--fill-secondary); -moz-context-properties: fill; width: 12px; height: 12px; padding: 1px; box-sizing: content-box;";
-					cell.append(icon);
+				// always have an icon so we can click it to toggle the pin state
+				// but hide it if the item isn't pinned
+				const icon = this.createSpanElement("icon icon-css", "");
+				icon.style.cssText +=
+					"background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain; fill: var(--fill-secondary); -moz-context-properties: fill; width: 12px; height: 12px; padding: 1px; box-sizing: content-box;";
+				cell.append(icon);
+				if (data !== "T") {
+					icon.style.visibility = "hidden";
 				}
 
 				return cell;
@@ -91,6 +96,50 @@ export default class ZoteroPinItems {
 			width: "32",
 			zoteroPersist: ["width", "hidden", "sortDirection"],
 		});
+	}
+
+	async addClickListenerToItemTree() {
+		// wait until the item tree is initialised so we can patch its _handleMouseDown function
+		while (
+			ZoteroPane.itemsView == false ||
+			typeof ZoteroPane.itemsView.tree == "undefined"
+		) {
+			await new Promise<void>((resolve) => {
+				setTimeout(() => {
+					resolve();
+				}, 1000);
+			});
+		}
+
+		const toggleItemPinned = (item: Zotero.Item) =>
+			this.toggleItemPinned(item);
+		patch(
+			ZoteroPane.itemsView.tree,
+			"_handleMouseDown",
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+			(original: Function) =>
+				function (this: object, e: MouseEvent, index: number) {
+					// rangeParent seems to be the specific item in the DOM that was clicked
+					// check that it's part of the pin items column
+					const classList = e.rangeParent?.parentElement?.classList;
+					if (
+						classList != undefined &&
+						classList.contains(
+							"zotero-pin-items-hotmail-com-pinitems",
+						)
+					) {
+						if (ZoteroPane.itemsView != false) {
+							const row = ZoteroPane.itemsView.getRow(index);
+							// actually the ref property does exist
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+							const item: Zotero.Item = row.ref;
+							toggleItemPinned(item);
+						}
+					}
+					// eslint-disable-next-line prefer-rest-params
+					original.apply(this, arguments);
+				},
+		);
 	}
 
 	createSpanElement(className: string, innerText: string) {
@@ -158,6 +207,14 @@ export default class ZoteroPinItems {
 				pinnedCollections.filter((key) => key != currentCollection),
 			);
 			void item.saveTx();
+		}
+	}
+
+	toggleItemPinned(item: Zotero.Item) {
+		if (this.isItemPinned(item)) {
+			this.unpinItem(item);
+		} else {
+			this.pinItem(item);
 		}
 	}
 
