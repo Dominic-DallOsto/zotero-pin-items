@@ -5,3 +5,18 @@
 .cell.zotero-pin-items-hotmail-com-pinitems {
 	text-align: center;
 }
+
+.icon-pin {
+	background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain;
+	fill: var(--fill-secondary);
+	-moz-context-properties: fill;
+	width: 12px;
+	height: 12px;
+	padding: 1px;
+	box-sizing: content-box;
+}
+
+/* Make the pin white when it's selected so it's more easily visible */
+.virtualized-table:focus-within .row.selected .icon-pin {
+	fill: white;
+}

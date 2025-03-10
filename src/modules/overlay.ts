@@ -82,9 +82,10 @@ export default class ZoteroPinItems {
 				);
 				// always have an icon so we can click it to toggle the pin state
 				// but hide it if the item isn't pinned
-				const icon = this.createSpanElement("icon icon-css", "");
-				icon.style.cssText +=
-					"background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain; fill: var(--fill-secondary); -moz-context-properties: fill; width: 12px; height: 12px; padding: 1px; box-sizing: content-box;";
+				const icon = this.createSpanElement(
+					"icon icon-css icon-pin",
+					"",
+				);
 				cell.append(icon);
 				if (data !== "T") {
 					icon.style.visibility = "hidden";
