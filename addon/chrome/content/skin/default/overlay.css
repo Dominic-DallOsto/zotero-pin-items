@@ -7,7 +7,8 @@
 }
 
 .icon-pin {
-	background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain;
+	background: url(chrome://zotero/skin/16/universal/pin.svg) content-box
+		no-repeat center/contain;
 	fill: var(--fill-secondary);
 	-moz-context-properties: fill;
 	width: 12px;
