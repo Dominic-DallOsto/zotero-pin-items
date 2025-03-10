@@ -18,8 +18,9 @@ An extension for Zotero that allows you to pin items in your collections so they
 ## How to use
 
 1. Right click on the item pane header, then add the Pinned Items column
-2. Click the pin in the header to sort pinned items to the top
-3. Right click on the item pane header, then set the secondary sorting
-4. Right click on items to pin / unpin them (note: you can pin items in different collections independently)
+2. Pin / unpin items by right clicking them, or clicking the space in the pinned items column (note: you can pin items in different collections independently)
+3. Click the pin in the header to sort pinned items to the top
+4. Right click on the item pane header, then set the secondary sorting
+5. You can further customise the sorting order in the preferences (Edit -> Settings -> Pin Items)
 
 ![how-to-pin-item](https://github.com/user-attachments/assets/e7771957-6f0f-4275-aeef-4b9a8fd54f80)
