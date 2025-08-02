@@ -32,22 +32,22 @@
 	},
 	"homepage": "https://github.com/Dominic-DallOsto/zotero-pin-items",
 	"dependencies": {
-		"zotero-plugin-toolkit": "^4.1.1"
+		"zotero-plugin-toolkit": "^5.0.1"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.21.0",
-		"@types/node": "^22.13.5",
-		"esbuild": "^0.25.0",
-		"eslint": "^9.21.0",
-		"eslint-config-prettier": "^10.0.1",
-		"globals": "^16.0.0",
-		"prettier": "^3.5.2",
-		"release-it": "^18.1.2",
+		"@eslint/js": "^9.32.0",
+		"@types/node": "^24.1.0",
+		"esbuild": "^0.25.8",
+		"eslint": "^9.32.0",
+		"eslint-config-prettier": "^10.1.8",
+		"globals": "^16.3.0",
+		"prettier": "^3.6.2",
+		"release-it": "^19.0.4",
 		"replace-in-file": "^8.3.0",
-		"typescript": "^5.7.3",
-		"typescript-eslint": "^8.24.1",
-		"zotero-plugin-scaffold": "^0.2.4",
-		"zotero-types": "^3.1.7"
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.38.0",
+		"zotero-plugin-scaffold": "^0.8.0",
+		"zotero-types": "^4.0.5"
 	},
 	"prettier": {
 		"printWidth": 80,
