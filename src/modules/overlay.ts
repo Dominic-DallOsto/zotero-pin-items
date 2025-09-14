@@ -11,6 +11,10 @@ import {
 	getPrefGlobalName,
 } from "../utils/prefs";
 import { patch } from "../utils/patcher";
+import {
+	fixStyleSheetBug,
+	cleanupStyleSheetBugFix,
+} from "../utils/itemTreeStyleSheetBug";
 
 const PIN_ITEMS_COLUMN_ID = "pinitems";
 const PINNED_EXTRA_FIELD = "Pinned_Collections";
@@ -31,6 +35,7 @@ export default class ZoteroPinItems {
 	preferenceUpdateObservers?: symbol[];
 
 	constructor() {
+		void fixStyleSheetBug(config.addonID);
 		this.initialiseDefaultPreferences();
 		this.addPinItemsColumn();
 		this.addRightClickMenuItems();
@@ -45,6 +50,7 @@ export default class ZoteroPinItems {
 		this.removeRightClickMenuItems();
 		this.removePreferencesMenu();
 		this.removePreferenceUpdateObservers();
+		cleanupStyleSheetBugFix(config.addonID);
 	}
 
 	initialiseDefaultPreferences() {
