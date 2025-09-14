@@ -1,7 +1,8 @@
+import { config } from "../../package.json";
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-const patchMarker = "ZoteroReadingListPatch";
-const patchMarkerOriginal = "ZoteroReadingListPatch_original";
+const patchMarker = `${config.addonInstance}Patch`;
+const patchMarkerOriginal = `${patchMarker}_original`;
 
 export function patch(
 	methodObject: any,
