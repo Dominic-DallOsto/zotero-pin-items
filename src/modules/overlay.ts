@@ -11,10 +11,6 @@ import {
 	getPrefGlobalName,
 } from "../utils/prefs";
 import { patch } from "../utils/patcher";
-import {
-	fixStyleSheetBug,
-	cleanupStyleSheetBugFix,
-} from "../utils/itemTreeStyleSheetBug";
 
 const PIN_ITEMS_COLUMN_ID = "pinitems";
 const PINNED_EXTRA_FIELD = "Pinned_Collections";
@@ -35,7 +31,6 @@ export default class ZoteroPinItems {
 	preferenceUpdateObservers?: symbol[];
 
 	constructor() {
-		void fixStyleSheetBug(config.addonID);
 		this.initialiseDefaultPreferences();
 		this.addPinItemsColumn();
 		this.addRightClickMenuItems();
@@ -50,7 +45,6 @@ export default class ZoteroPinItems {
 		this.removeRightClickMenuItems();
 		this.removePreferencesMenu();
 		this.removePreferenceUpdateObservers();
-		cleanupStyleSheetBugFix(config.addonID);
 	}
 
 	initialiseDefaultPreferences() {
@@ -60,12 +54,12 @@ export default class ZoteroPinItems {
 
 	addPinItemsColumn() {
 		this.pinItemsColumnId = Zotero.ItemTreeManager.registerColumn({
-			dataKey: PIN_ITEMS_COLUMN_ID,
+			dataKey: `${config.addonID.replaceAll("-", "_").replaceAll("@", "_at_").replaceAll(".", "_")}_${PIN_ITEMS_COLUMN_ID}`,
 			// If we just want to show the icon, overwrite the label with htmlLabel (#1)
 			htmlLabel: `<span xmlns="http://www.w3.org/1999/xhtml" class="icon icon-css icon-16" style="background: url(chrome://zotero/skin/16/universal/pin.svg) content-box no-repeat center/contain; fill: var(--fill-secondary); -moz-context-properties: fill;" />`,
 			iconPath: "chrome://zotero/skin/16/universal/pin.svg", // this hides the sorting arrow
 			label: getString("pinitems-column-name"),
-			pluginID: config.addonID,
+			pluginID: "",
 			dataProvider: (item: Zotero.Item, dataKey: string) => {
 				return item.isRegularItem()
 					? this.isItemPinned(item)
