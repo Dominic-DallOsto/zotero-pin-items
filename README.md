@@ -8,7 +8,7 @@ An extension for Zotero that allows you to pin items in your collections so they
 
 ## Installation
 
-> **Note:** This extension only works with Zotero 7
+> **Note:** This extension only works with Zotero versions 7+
 
 1. Download the latest release [here](https://github.com/Dominic-DallOsto/zotero-pin-items/releases/latest)
 2. Save the .xpi file (in Firefox, Right click -> Save Link As)
