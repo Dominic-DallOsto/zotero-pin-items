@@ -160,6 +160,29 @@ export default class ZoteroPinItems {
 		}
 	}
 
+	getSelectedCollection() {
+		// If multiple collections are selected - return undefined
+		// Zotero <10 has getSelectedCollection, Zotero 10 has getSelectedCollections
+		let selectedCollections: Zotero.Collection[] = [];
+		if (ZoteroPane.getSelectedCollections) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+			selectedCollections = ZoteroPane.getSelectedCollections();
+		} else {
+			const collection = ZoteroPane.getSelectedCollection();
+			if (collection) {
+				selectedCollections = [collection];
+			}
+		}
+
+		if (selectedCollections.length == 0) {
+			return "library";
+		} else if (selectedCollections.length == 1) {
+			return selectedCollections[0].key;
+		} else {
+			return undefined;
+		}
+	}
+
 	getItemPinnedCollections(item: Zotero.Item) {
 		// value looks like
 		// Pinned_Collections: collectionKey1,collectionKey2,collectionKey3
@@ -185,15 +208,20 @@ export default class ZoteroPinItems {
 	}
 
 	isItemPinned(item: Zotero.Item) {
-		return this.getItemPinnedCollections(item).includes(
-			ZoteroPane.getSelectedCollection()?.key || "library",
-		);
+		const selectedCollection = this.getSelectedCollection();
+		if (selectedCollection) {
+			return this.getItemPinnedCollections(item).includes(
+				selectedCollection,
+			);
+		}
 	}
 
 	pinItem(item: Zotero.Item) {
 		const pinnedCollections = this.getItemPinnedCollections(item);
-		const currentCollection =
-			ZoteroPane.getSelectedCollection()?.key || "library";
+		const currentCollection = this.getSelectedCollection();
+		if (!currentCollection) {
+			return;
+		}
 		if (!pinnedCollections.includes(currentCollection)) {
 			pinnedCollections.push(currentCollection);
 			this.setItemPinnedCollections(item, pinnedCollections);
@@ -203,8 +231,10 @@ export default class ZoteroPinItems {
 
 	unpinItem(item: Zotero.Item) {
 		const pinnedCollections = this.getItemPinnedCollections(item);
-		const currentCollection =
-			ZoteroPane.getSelectedCollection()?.key || "library";
+		const currentCollection = this.getSelectedCollection();
+		if (!currentCollection) {
+			return;
+		}
 		if (pinnedCollections.includes(currentCollection)) {
 			this.setItemPinnedCollections(
 				item,
@@ -231,6 +261,10 @@ export default class ZoteroPinItems {
 				label: getString("pin-item"),
 				icon: "chrome://zotero/skin/16/universal/pin.svg",
 				getVisibility: (element, event) => {
+					// if the user has selected multiple collections, we don't offer to pin items
+					if (!this.getSelectedCollection()) {
+						return false;
+					}
 					const selectedItems = ZoteroPane.getSelectedItems().filter(
 						(item) => item.isRegularItem(),
 					);
@@ -265,6 +299,10 @@ export default class ZoteroPinItems {
 				label: getString("unpin-item"),
 				icon: "chrome://zotero/skin/16/universal/pin-remove.svg",
 				getVisibility: (element, event) => {
+					// if the user has selected multiple collections, we don't offer to pin items
+					if (!this.getSelectedCollection()) {
+						return false;
+					}
 					const selectedItems = ZoteroPane.getSelectedItems().filter(
 						(item) => item.isRegularItem(),
 					);
